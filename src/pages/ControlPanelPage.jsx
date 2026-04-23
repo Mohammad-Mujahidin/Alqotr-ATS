@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { getSubmissions, deleteSubmission } from "../data/db.js";
 import { saveDraft } from "../data/storage.js";
 
@@ -69,6 +70,29 @@ export default function ControlPanelPage() {
     );
   }
 
+=======
+import { loadSubmissions, saveDraft, saveSubmissions } from "../data/storage.js";
+
+export default function ControlPanelPage() {
+  const [items, setItems] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setItems(loadSubmissions());
+  }, []);
+
+  const handleLoad = (item) => {
+    saveDraft(item);
+    navigate("/");
+  };
+
+  const handleDelete = (id) => {
+    const next = items.filter((x) => x.id !== id);
+    setItems(next);
+    saveSubmissions(next);
+  };
+
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   return (
     <div className="card">
       <div className="card-header">
@@ -80,6 +104,7 @@ export default function ControlPanelPage() {
           <div className="empty-state">No saved submissions yet.</div>
         ) : (
           <div className="saved-list">
+<<<<<<< HEAD
             {items.map((row) => (
               <div key={row.id} className="saved-item">
                 <div className="saved-header">
@@ -105,11 +130,21 @@ export default function ControlPanelPage() {
                     className="btn btn-outline btn-small"
                     onClick={() => handleLoad(row)}
                   >
+=======
+            {items.map((item) => (
+              <div key={item.id} className="saved-item">
+                <h4>{item.personal?.fullName || "Untitled Resume"}</h4>
+                <p className="muted">{item.personal?.targetRole || "No target role"}</p>
+
+                <div className="action-row">
+                  <button className="btn btn-outline btn-small" onClick={() => handleLoad(item)}>
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                     Load into Form
                   </button>
 
                   <button
                     className="btn btn-outline btn-small"
+<<<<<<< HEAD
                     onClick={() => handleOpenPreview(row)}
                   >
                     Open Preview
@@ -118,6 +153,9 @@ export default function ControlPanelPage() {
                   <button
                     className="btn btn-outline btn-small"
                     onClick={() => handleDelete(row.id)}
+=======
+                    onClick={() => handleDelete(item.id)}
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                   >
                     Delete
                   </button>

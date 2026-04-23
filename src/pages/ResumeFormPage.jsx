@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo, useState } from "react";
 import mammoth from "mammoth";
 import * as pdfjsLib from "pdfjs-dist";
@@ -5,6 +6,15 @@ import { Save, Trash2, Plus, Upload } from "lucide-react";
 import DynamicList from "../components/DynamicList.jsx";
 import { loadDraft, saveDraft } from "../data/storage.js";
 import { createSubmission, updateSubmission } from "../data/db.js";
+=======
+import React, { useEffect, useState } from "react";
+import mammoth from "mammoth";
+import * as pdfjsLib from "pdfjs-dist";
+import { useNavigate } from "react-router-dom";
+import { Upload, Save, Plus, Trash2 } from "lucide-react";
+import DynamicList from "../components/DynamicList.jsx";
+import { loadDraft, loadSubmissions, saveDraft, saveSubmissions } from "../data/storage.js";
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
 
 try {
   pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -64,7 +74,10 @@ const emptyLanguage = () => ({
 
 const emptyResume = () => ({
   id: createId(),
+<<<<<<< HEAD
   dbId: "",
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   title: "ATS Resume",
   personal: {
     fullName: "",
@@ -87,7 +100,10 @@ const emptyResume = () => ({
   additionalInfo: [""],
   uploadedCvText: "",
   sourceFileName: "",
+<<<<<<< HEAD
   profileImage: "",
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   updatedAt: new Date().toISOString(),
 });
 
@@ -160,11 +176,15 @@ function parseCvText(rawText, currentData) {
 
   const skillsLines = linesBetweenSections(text, /^skills?$/i, sectionStops);
   const keywordsLines = linesBetweenSections(text, /^(keywords|ats keywords)$/i, sectionStops);
+<<<<<<< HEAD
   const summaryLines = linesBetweenSections(
     text,
     /^(summary|profile|professional summary)$/i,
     sectionStops
   );
+=======
+  const summaryLines = linesBetweenSections(text, /^(summary|profile|professional summary)$/i, sectionStops);
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   const additionalLines = linesBetweenSections(text, /^additional information$/i, sectionStops);
   const certLines = linesBetweenSections(text, /^certifications?$/i, sectionStops);
   const langLines = linesBetweenSections(text, /^languages?$/i, sectionStops);
@@ -215,6 +235,7 @@ function parseCvText(rawText, currentData) {
   };
 }
 
+<<<<<<< HEAD
 function cleanList(values = []) {
   return values.map((v) => (v || "").trim()).filter(Boolean);
 }
@@ -272,13 +293,27 @@ export default function ResumeFormPage() {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+=======
+export default function ResumeFormPage() {
+  const [resume, setResume] = useState(emptyResume());
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const draft = loadDraft();
+    if (draft) setResume(draft);
+  }, []);
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
 
   useEffect(() => {
     saveDraft({ ...resume, updatedAt: new Date().toISOString() });
   }, [resume]);
 
+<<<<<<< HEAD
   const currentScore = useMemo(() => scoreResume(resume), [resume]);
 
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   const updateResume = (path, value) => {
     setResume((prev) => {
       const next = structuredClone(prev);
@@ -344,6 +379,7 @@ export default function ResumeFormPage() {
     }
   };
 
+<<<<<<< HEAD
   const handleProfileImageUpload = (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -410,14 +446,28 @@ export default function ResumeFormPage() {
     } finally {
       setSaving(false);
     }
+=======
+  const handleSubmit = () => {
+    const existing = loadSubmissions();
+    const entry = {
+      ...resume,
+      id: createId(),
+      savedAt: new Date().toISOString(),
+    };
+    saveSubmissions([entry, ...existing]);
+    navigate("/control-panel");
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
   };
 
   return (
     <div className="stack">
+<<<<<<< HEAD
       {showSuccess ? (
         <div className="success-toast">Submission saved successfully.</div>
       ) : null}
 
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
       <div className="card">
         <div className="card-header">
           <h2>
@@ -454,6 +504,7 @@ export default function ResumeFormPage() {
       <div className="card">
         <div className="card-header row-between">
           <h2>Resume Form</h2>
+<<<<<<< HEAD
 
           <div className="action-row">
             <span className="pill">ATS Score: {currentScore}/100</span>
@@ -461,12 +512,20 @@ export default function ResumeFormPage() {
               <Save size={16} /> {saving ? "Saving..." : "Submit"}
             </button>
           </div>
+=======
+          <button className="btn btn-primary" onClick={handleSubmit}>
+            <Save size={16} /> Submit to Control Panel
+          </button>
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
         </div>
 
         <div className="card-body stack-lg">
           <section className="section">
             <h3>Personal Information</h3>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
             <div className="grid-2">
               <div className="field-block">
                 <label className="label">Full Name</label>
@@ -543,6 +602,7 @@ export default function ResumeFormPage() {
           </section>
 
           <section className="section">
+<<<<<<< HEAD
             <h3>Profile Image</h3>
 
             <div className="stack-sm">
@@ -563,6 +623,8 @@ export default function ResumeFormPage() {
           </section>
 
           <section className="section">
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
             <h3>Professional Summary</h3>
             <textarea
               className="textarea"
@@ -594,7 +656,10 @@ export default function ResumeFormPage() {
             <div className="row-between section-head">
               <h3>Work Experience</h3>
               <button
+<<<<<<< HEAD
                 type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                 className="btn btn-outline btn-small"
                 onClick={() => updateResume(["experience"], [...resume.experience, emptyExperience()])}
               >
@@ -608,7 +673,10 @@ export default function ResumeFormPage() {
                   <div className="row-between">
                     <h4>Experience #{index + 1}</h4>
                     <button
+<<<<<<< HEAD
                       type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                       className="btn btn-outline btn-small"
                       onClick={() =>
                         updateResume(
@@ -711,7 +779,10 @@ export default function ResumeFormPage() {
             <div className="row-between section-head">
               <h3>Education</h3>
               <button
+<<<<<<< HEAD
                 type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                 className="btn btn-outline btn-small"
                 onClick={() => updateResume(["education"], [...resume.education, emptyEducation()])}
               >
@@ -725,7 +796,10 @@ export default function ResumeFormPage() {
                   <div className="row-between">
                     <h4>Education #{index + 1}</h4>
                     <button
+<<<<<<< HEAD
                       type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                       className="btn btn-outline btn-small"
                       onClick={() =>
                         updateResume(
@@ -828,7 +902,10 @@ export default function ResumeFormPage() {
             <div className="row-between section-head">
               <h3>Projects</h3>
               <button
+<<<<<<< HEAD
                 type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                 className="btn btn-outline btn-small"
                 onClick={() => updateResume(["projects"], [...resume.projects, emptyProject()])}
               >
@@ -842,7 +919,10 @@ export default function ResumeFormPage() {
                   <div className="row-between">
                     <h4>Project #{index + 1}</h4>
                     <button
+<<<<<<< HEAD
                       type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                       className="btn btn-outline btn-small"
                       onClick={() =>
                         updateResume(
@@ -946,7 +1026,10 @@ export default function ResumeFormPage() {
                 <div className="row-between section-head">
                   <h3>Certifications</h3>
                   <button
+<<<<<<< HEAD
                     type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                     className="btn btn-outline btn-small"
                     onClick={() =>
                       updateResume(["certifications"], [...resume.certifications, emptyCertification()])
@@ -962,7 +1045,10 @@ export default function ResumeFormPage() {
                       <div className="row-between">
                         <h4>Certification #{index + 1}</h4>
                         <button
+<<<<<<< HEAD
                           type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                           className="icon-btn"
                           onClick={() =>
                             updateResume(
@@ -1029,7 +1115,10 @@ export default function ResumeFormPage() {
                 <div className="row-between section-head">
                   <h3>Languages</h3>
                   <button
+<<<<<<< HEAD
                     type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                     className="btn btn-outline btn-small"
                     onClick={() => updateResume(["languages"], [...resume.languages, emptyLanguage()])}
                   >
@@ -1043,7 +1132,10 @@ export default function ResumeFormPage() {
                       <div className="row-between">
                         <h4>Language #{index + 1}</h4>
                         <button
+<<<<<<< HEAD
                           type="button"
+=======
+>>>>>>> ecfaaa3feb7d0d460686a00ee529e22bcbcb80d0
                           className="icon-btn"
                           onClick={() =>
                             updateResume(
