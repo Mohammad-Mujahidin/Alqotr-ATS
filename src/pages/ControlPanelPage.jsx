@@ -32,7 +32,7 @@ export default function ControlPanelPage() {
     };
 
     saveDraft(resume);
-    alert("Submission loaded into the form. Open the Resume Form page to review it.");
+    window.location.href = "/";
   };
 
   const handleDelete = async (id) => {
@@ -77,48 +77,56 @@ export default function ControlPanelPage() {
         {!items.length ? (
           <div className="empty-state">No saved submissions yet.</div>
         ) : (
-          <div className="saved-list">
+          <div className="control-panel-list">
             {items.map((row) => (
-              <div key={row.id} className="saved-item">
-                <div className="saved-header">
-                  {row.profile_image ? (
-                    <img
-                      src={row.profile_image}
-                      alt="Profile"
-                      className="saved-profile-image"
-                    />
-                  ) : null}
+              <div key={row.id} className="control-panel-item">
+                <div className="control-panel-main">
+                  <div className="control-panel-avatar">
+                    {row.profile_image ? (
+                      <img
+                        src={row.profile_image}
+                        alt="Profile"
+                        className="saved-profile-image"
+                      />
+                    ) : (
+                      <div className="saved-profile-placeholder">No Image</div>
+                    )}
+                  </div>
 
-                  <div>
-                    <h4>{row.full_name || "Untitled Resume"}</h4>
-                    <p className="muted">{row.target_role || "No target role"}</p>
-                    <p className="muted small">
+                  <div className="control-panel-content">
+                    <h3 className="control-panel-name">
+                      {row.full_name || "Untitled Resume"}
+                    </h3>
+                    <p className="control-panel-role">
+                      {row.target_role || "No target role"}
+                    </p>
+                    <p className="control-panel-date">
                       Saved {new Date(row.created_at).toLocaleString()}
                     </p>
+
+                    <div className="control-panel-actions">
+                      <button
+                        className="btn btn-outline btn-small"
+                        onClick={() => handleLoad(row)}
+                      >
+                        Load into Form
+                      </button>
+
+                      <button
+                        className="btn btn-outline btn-small"
+                        onClick={() => handleOpenPreview(row)}
+                      >
+                        Open Preview
+                      </button>
+
+                      <button
+                        className="btn btn-outline btn-small"
+                        onClick={() => handleDelete(row.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div className="action-row">
-                  <button
-                    className="btn btn-outline btn-small"
-                    onClick={() => handleLoad(row)}
-                  >
-                    Load into Form
-                  </button>
-
-                  <button
-                    className="btn btn-outline btn-small"
-                    onClick={() => handleOpenPreview(row)}
-                  >
-                    Open Preview
-                  </button>
-
-                  <button
-                    className="btn btn-outline btn-small"
-                    onClick={() => handleDelete(row.id)}
-                  >
-                    Delete
-                  </button>
                 </div>
               </div>
             ))}

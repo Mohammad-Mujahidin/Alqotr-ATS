@@ -687,3 +687,90 @@ input[type="file"]:focus {
     align-items: flex-start;
   }
 }
+
+.control-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.control-panel-item {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 16px 18px;
+}
+
+.control-panel-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.control-panel-avatar {
+  flex: 0 0 auto;
+}
+
+.saved-profile-image {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #dbe4ee;
+  display: block;
+}
+
+.saved-profile-placeholder {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  border: 1px solid #dbe4ee;
+  background: #e5e7eb;
+  color: #6b7280;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-panel-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.control-panel-name {
+  margin: 0 0 4px;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.control-panel-role {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #475569;
+}
+
+.control-panel-date {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.control-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 700px) {
+  .control-panel-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .control-panel-name {
+    font-size: 18px;
+  }
+}
